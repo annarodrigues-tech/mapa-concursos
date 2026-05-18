@@ -636,7 +636,11 @@ function normArea(a) {
 // ── FETCH ────────────────────────────────────
 async function load() {
   try {
-    const r = await fetch(`${API_URL}?action=mapa`);
+    const r = await fetch(`${API_URL}?action=mapa`, {
+      method: 'GET',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' }
+    });
     const d = await r.json();
     if (d.erro) throw new Error(d.erro);
     all = (d.registros||[]).map((r,i) => ({
