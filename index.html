@@ -117,6 +117,7 @@ header {
   position: absolute;
   top: 52px; left: 0; right: 0; bottom: 0;
   z-index: 1;
+  background: #d6e4f0;
 }
  
 /* ── FLOATING SEARCH + FILTERS ───────────── */
@@ -488,6 +489,12 @@ header {
         <strong id="h-abertos" style="color:var(--green)">—</strong>
         <span style="color:var(--green)">inscrições abertas</span>
       </div>
+      <div class="counter-sep"></div>
+      <div class="counter-item">
+        <div class="dot" style="background:var(--red)"></div>
+        <strong id="h-vagas" style="color:var(--red)">—</strong>
+        <span style="color:var(--red)">vagas abertas</span>
+      </div>
     </div>
   </div>
 </header>
@@ -518,10 +525,8 @@ header {
  
   <div class="fp-section">
     <div class="fp-section-title">Situação</div>
-    <label class="fp-check"><input type="checkbox" value="aberto" onchange="updateFilters()"> Inscrições abertas</label>
-    <label class="fp-check"><input type="checkbox" value="previsto" onchange="updateFilters()"> Edital em breve</label>
-    <label class="fp-check"><input type="checkbox" value="encerrado" onchange="updateFilters()"> Inscrições encerradas</label>
-    <label class="fp-check"><input type="checkbox" value="outros" onchange="updateFilters()"> Sem previsão</label>
+    <label class="fp-check"><input type="checkbox" value="aberto" onchange="updateFilters()" checked> Inscrições abertas</label>
+    <label class="fp-check"><input type="checkbox" value="previsto" onchange="updateFilters()" checked> Previstas / Em andamento</label>
   </div>
  
   <div class="fp-section">
@@ -541,25 +546,37 @@ header {
   </div>
  
   <div class="fp-section">
-    <div class="fp-section-title">Estado</div>
-    <select class="fp-uf" id="fp-uf" onchange="updateFilters()">
-      <option value="all">Todos os estados</option>
-      <option value="NAC">Nacional (Federal)</option>
-      <option value="AC">Acre</option><option value="AL">Alagoas</option>
-      <option value="AM">Amazonas</option><option value="AP">Amapá</option>
-      <option value="BA">Bahia</option><option value="CE">Ceará</option>
-      <option value="DF">Distrito Federal</option><option value="ES">Espírito Santo</option>
-      <option value="GO">Goiás</option><option value="MA">Maranhão</option>
-      <option value="MG">Minas Gerais</option><option value="MS">Mato Grosso do Sul</option>
-      <option value="MT">Mato Grosso</option><option value="PA">Pará</option>
-      <option value="PB">Paraíba</option><option value="PE">Pernambuco</option>
-      <option value="PI">Piauí</option><option value="PR">Paraná</option>
-      <option value="RJ">Rio de Janeiro</option><option value="RN">Rio Grande do Norte</option>
-      <option value="RO">Rondônia</option><option value="RR">Roraima</option>
-      <option value="RS">Rio Grande do Sul</option><option value="SC">Santa Catarina</option>
-      <option value="SE">Sergipe</option><option value="SP">São Paulo</option>
-      <option value="TO">Tocantins</option>
-    </select>
+    <div class="fp-section-title">Estado <span style="font-size:.7rem;font-weight:400;color:var(--text3)">(múltipla seleção)</span></div>
+    <div style="max-height:220px;overflow-y:auto;padding-right:4px">
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="NAC" onchange="updateFilters()"> 🇧🇷 Nacional (Federal)</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="AC" onchange="updateFilters()"> AC — Acre</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="AL" onchange="updateFilters()"> AL — Alagoas</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="AM" onchange="updateFilters()"> AM — Amazonas</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="AP" onchange="updateFilters()"> AP — Amapá</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="BA" onchange="updateFilters()"> BA — Bahia</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="CE" onchange="updateFilters()"> CE — Ceará</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="DF" onchange="updateFilters()"> DF — Distrito Federal</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="ES" onchange="updateFilters()"> ES — Espírito Santo</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="GO" onchange="updateFilters()"> GO — Goiás</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="MA" onchange="updateFilters()"> MA — Maranhão</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="MG" onchange="updateFilters()"> MG — Minas Gerais</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="MS" onchange="updateFilters()"> MS — Mato Grosso do Sul</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="MT" onchange="updateFilters()"> MT — Mato Grosso</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="PA" onchange="updateFilters()"> PA — Pará</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="PB" onchange="updateFilters()"> PB — Paraíba</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="PE" onchange="updateFilters()"> PE — Pernambuco</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="PI" onchange="updateFilters()"> PI — Piauí</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="PR" onchange="updateFilters()"> PR — Paraná</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="RJ" onchange="updateFilters()"> RJ — Rio de Janeiro</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="RN" onchange="updateFilters()"> RN — Rio Grande do Norte</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="RO" onchange="updateFilters()"> RO — Rondônia</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="RR" onchange="updateFilters()"> RR — Roraima</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="RS" onchange="updateFilters()"> RS — Rio Grande do Sul</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="SC" onchange="updateFilters()"> SC — Santa Catarina</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="SE" onchange="updateFilters()"> SE — Sergipe</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="SP" onchange="updateFilters()"> SP — São Paulo</label>
+      <label class="fp-check"><input type="checkbox" class="uf-check" value="TO" onchange="updateFilters()"> TO — Tocantins</label>
+    </div>
   </div>
 </div>
  
@@ -574,23 +591,19 @@ header {
 </div>
  
 <!-- LEGEND -->
-<div class="legend">
+  <div class="legend">
   <div class="legend-title">Situação</div>
-  <div class="li"><div class="ld" style="background:var(--green)"></div> Inscrições abertas</div>
-  <div class="li"><div class="ld" style="background:var(--blue)"></div> Previstas</div>
-  <div class="li"><div class="ld" style="background:#1e40af"></div> Sem previsão</div>
-  <div class="li"><div class="ld" style="background:#9b2226"></div> Encerradas</div>
-  <div class="li"><div class="ld" style="background:var(--gray)"></div> Outras</div>
+  <div class="li"><div class="ld" style="background:#3BAE8A"></div> Inscrições abertas</div>
+  <div class="li"><div class="ld" style="background:#4B7BE5"></div> Previstas</div>
 </div>
  
 <script>
 // ── CONFIG ─────────────────────────────────
-const SUPA_URL = 'https://bshsxflrixcjwdlielab.supabase.co';
-const SUPA_KEY = 'sb_publishable_NO2K81Lf_qrg1dywfUQVTA_W2PZ4ubY';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxh4Us8DosVf3xjDAkhB9YQLSOugQwAWmzDn0uLX06pPJVXNLAH9A2jffdNzsEItNJ3KA/exec';
  
 // ── STATE ───────────────────────────────────
 let all = [], cluster, map;
-let filters = { situacoes: [], areas: [], uf: 'all', search: '' };
+let filters = { situacoes: [], areas: [], uf: 'all', ufs: [], search: '' };
  
 // ── HELPERS ─────────────────────────────────
 const days = d => d ? Math.ceil((new Date(d) - new Date()) / 86400000) : null;
@@ -610,10 +623,9 @@ function sitClass(s) {
  
 function sitColor(sit) {
   const s = sitClass(sit);
-  if (s==='aberto')    return '#3BAE8A';
-  if (s==='previsto')  return '#4B7BE5';
-  if (s==='encerrado') return '#9b2226';
-  return '#1e40af';
+  if (s==='aberto')   return '#3BAE8A';
+  if (s==='previsto') return '#4B7BE5';
+  return null;
 }
  
 function normArea(a) {
@@ -634,38 +646,58 @@ function normArea(a) {
   return a;
 }
  
-// ── FETCH DO SUPABASE ────────────────────────
+// ── FETCH ────────────────────────────────────
 async function load() {
   try {
-    // Busca concursos com situação ativa e coordenadas válidas
-    const res = await fetch(
-      SUPA_URL + '/rest/v1/concursos?select=id,orgao,esfera,estado,cidade,lat,lng,salario,salario_maximo,qtd_vagas,vagas,data_inscricao_termino,inscricao_fim,cargo,banca,area,situacao_concurso,situacao,url,link_do_edital,tamanho_concurso&order=id.desc&limit=1000',
-      { headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY } }
-    );
-    if (!res.ok) throw new Error('Erro ' + res.status);
-    const data = await res.json();
- 
-    all = data.map((r, i) => ({
-      id:           r.id || i + 1,
-      orgao:        r.orgao || '',
-      esfera:       r.esfera || (r.estado === 'NAC' ? 'Federal' : 'Estadual'),
-      estado:       r.estado || '',
+    // JSONP — resolve CORS sem proxy
+    d = await new Promise((resolve, reject) => {
+      const cb = 'cb_' + Date.now();
+      const script = document.createElement('script');
+      const timeout = setTimeout(() => {
+        delete window[cb];
+        document.body.removeChild(script);
+        reject(new Error('Timeout ao carregar dados'));
+      }, 15000);
+      window[cb] = (data) => {
+        clearTimeout(timeout);
+        delete window[cb];
+        document.body.removeChild(script);
+        resolve(data);
+      };
+      script.src = API_URL + '?action=mapa&callback=' + cb;
+      script.onerror = () => {
+        clearTimeout(timeout);
+        delete window[cb];
+        reject(new Error('Erro ao carregar script'));
+      };
+      document.body.appendChild(script);
+    });
+    if (d.erro) throw new Error(d.erro);
+    all = (d.registros||[]).map((r,i) => ({
+      id:           r.id || i+1,
+      // Suporta tanto o formato da aba Consolidado quanto das abas mensais
+      orgao:        r.orgao || r['Nome'] || r['Concurso'] || '',
+      esfera:       r.esfera || (r.estado==='NAC'||r['UF']==='NAC' ? 'Federal' : 'Estadual'),
+      estado:       r.estado || r['UF'] || '',
       cidade:       r.cidade || '',
-      lat:          parseFloat(r.lat) || 0,
-      lng:          parseFloat(r.lng) || 0,
-      salario:      r.salario_maximo ? 'R$ ' + Number(r.salario_maximo).toLocaleString('pt-BR') : (r.salario || ''),
-      vagas:        parseInt(r.qtd_vagas || r.vagas) || 0,
-      inscricao_fim:r.data_inscricao_termino || r.inscricao_fim || '',
-      cargo:        r.cargo || '',
-      banca:        r.banca || '',
-      area:         r.area || '',
-      situacao:     r.situacao_concurso || r.situacao || '',
-      url:          r.link_do_edital || r.url || '',
-      tamanho:      r.tamanho_concurso || '',
+      lat:          parseFloat(r.lat || r['lat']) || 0,
+      lng:          parseFloat(r.lng || r['lng']) || 0,
+      salario:      r.salario || r['R$ Final (Teto)'] || r['$ final'] || r['R$ inicial'] || '',
+      vagas:        parseInt(r.vagas || r['Vagas']) || 0,
+      inscricao_fim:r.inscricao_fim || r['Inscrições até'] || r['Data da prova'] || r['Data da objetiva'] || '',
+      cargo:        r.cargo || r['Cargos'] || '',
+      banca:        r.banca || r['Banca - Edital vigente'] || r['Banca'] || '',
+      area:         r.area || r['Carreira Macro'] || r['Carreiras'] || '',
+      situacao:     r.situacao || r['Situação'] || '',
+      url:          r.url || r['URL Eterna'] || r['Link do edital'] || '',
+      url_blog:     r.url_blog || '',
+      url_curso:    r.url_curso || '',
     })).filter(r => r.orgao && (r.lat || r.estado));
- 
     document.getElementById('h-total').textContent   = fmt(all.length);
-    document.getElementById('h-abertos').textContent = all.filter(c => sitClass(c.situacao) === 'aberto').length;
+    const abertas = all.filter(c => sitClass(c.situacao)==='aberto');
+    document.getElementById('h-abertos').textContent = abertas.length;
+    const vagasAbertas = abertas.reduce((s, c) => s + (parseInt(c.vagas) || 0), 0);
+    document.getElementById('h-vagas').textContent   = fmt(vagasAbertas);
     renderMap();
   } catch(e) {
     console.error(e);
@@ -685,7 +717,7 @@ function filtered() {
       if (!filters.areas.includes(normArea(c.area))) return false;
     }
     // uf
-    if (filters.uf !== 'all' && c.estado !== filters.uf) return false;
+    if (filters.ufs && filters.ufs.length > 0 && !filters.ufs.includes(c.estado)) return false;
     // busca
     if (filters.search) {
       const h = [c.orgao,c.cargo,c.cidade,c.estado].map(x=>(x||'').toLowerCase()).join(' ');
@@ -709,12 +741,32 @@ function initMap() {
   }).addTo(map);
   map.fitBounds(bounds, {padding:[20,20]});
  
-  // Brasil border
+  // Carregar GeoJSON do Brasil
   fetch('https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil-states.geojson')
     .then(r=>r.json())
     .then(data => {
+      // Máscara azul escuro SÓLIDA cobrindo o mundo inteiro
+      const exterior = {
+        type: 'Feature',
+        geometry: {
+          type: 'Polygon',
+          coordinates: [[[-180,-90],[-180,90],[180,90],[180,-90],[-180,-90]]]
+        }
+      };
+      L.geoJSON(exterior, {
+        style: { color:'none', weight:0, fillColor:'#0d2137', fillOpacity:1 },
+        interactive: false
+      }).addTo(map);
+ 
+      // Brasil por cima — fundo branco/claro com divisas sutis
       L.geoJSON(data, {
-        style: { color:'#c8d0e0', weight:0.8, fillOpacity:0, opacity:1 },
+        style: {
+          color: '#8faabf',
+          weight: 0.6,
+          fillColor: '#f0f4f8',
+          fillOpacity: 1,
+          opacity: 0.8
+        },
         interactive: false
       }).addTo(map);
     }).catch(()=>{});
@@ -859,18 +911,15 @@ function closeFilters() {
 }
  
 function updateFilters() {
-  // situações
-  filters.situacoes = Array.from(document.querySelectorAll('.fp-check input:checked'))
-    .map(el => el.value)
-    .filter(v => ['aberto','previsto','encerrado','outros'].includes(v));
+  const checked = Array.from(document.querySelectorAll('.fp-check input:checked')).map(el => el.value);
+  const sitVals = ['aberto','previsto'];
+  const areaVals = ['Policial','Controle','Educação','Fiscal','Jurídica','Bancária','Legislativa','Administrativa','Saúde','TI','Militar','Tribunais'];
  
-  // áreas
-  filters.areas = Array.from(document.querySelectorAll('.fp-check input:checked'))
-    .map(el => el.value)
-    .filter(v => !['aberto','previsto','encerrado','outros'].includes(v));
+  filters.situacoes = checked.filter(v => sitVals.includes(v));
+  filters.areas     = checked.filter(v => areaVals.includes(v));
  
-  // uf
-  filters.uf = document.getElementById('fp-uf').value;
+  // UF — múltipla seleção via checkboxes
+  filters.ufs = Array.from(document.querySelectorAll('.uf-check:checked')).map(el => el.value);
  
   renderMap();
 }
