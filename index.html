@@ -12,7 +12,7 @@
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
 :root {
   --red:    #C0392B;
   --green:  #3BAE8A;
@@ -30,7 +30,7 @@
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
   --r: 12px;
 }
-
+ 
 body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
@@ -40,7 +40,7 @@ body {
   display: flex;
   flex-direction: column;
 }
-
+ 
 /* ── HEADER ──────────────────────────────── */
 header {
   position: absolute;
@@ -55,7 +55,7 @@ header {
   border-bottom: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
 }
-
+ 
 .logo {
   display: flex;
   align-items: center;
@@ -63,7 +63,7 @@ header {
   text-decoration: none;
   flex-shrink: 0;
 }
-
+ 
 .logo-icon {
   width: 32px; height: 32px;
   background: var(--red);
@@ -71,7 +71,7 @@ header {
   display: flex; align-items: center; justify-content: center;
   font-size: 16px;
 }
-
+ 
 .logo-text {
   font-size: 0.9rem;
   font-weight: 700;
@@ -85,13 +85,13 @@ header {
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
-
+ 
 .header-center {
   flex: 1;
   display: flex;
   justify-content: center;
 }
-
+ 
 .counter-pill {
   display: flex;
   align-items: center;
@@ -103,7 +103,7 @@ header {
   font-size: 0.8rem;
   backdrop-filter: blur(8px);
 }
-
+ 
 .counter-item { display: flex; align-items: center; gap: 5px; }
 .counter-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); }
 .counter-item .dot.live { background: var(--green); animation: pulse 2s infinite; }
@@ -111,14 +111,14 @@ header {
 .counter-item strong { font-weight: 700; color: var(--text); }
 .counter-item span   { color: var(--text2); }
 .counter-sep { width: 1px; height: 14px; background: var(--border); }
-
+ 
 /* ── MAP ─────────────────────────────────── */
 #map {
   position: absolute;
   top: 52px; left: 0; right: 0; bottom: 0;
   z-index: 1;
 }
-
+ 
 /* ── FLOATING SEARCH + FILTERS ───────────── */
 .float-search {
   position: absolute;
@@ -130,7 +130,7 @@ header {
   gap: 0;
   width: 300px;
 }
-
+ 
 .search-box {
   display: flex;
   align-items: center;
@@ -140,7 +140,7 @@ header {
   box-shadow: var(--shadow);
   overflow: hidden;
 }
-
+ 
 .search-input {
   flex: 1;
   padding: 11px 14px;
@@ -152,7 +152,7 @@ header {
   outline: none;
 }
 .search-input::placeholder { color: var(--text3); }
-
+ 
 .search-btn {
   padding: 11px 14px;
   background: transparent;
@@ -164,7 +164,7 @@ header {
   transition: background .15s;
 }
 .search-btn:hover { background: var(--bg); }
-
+ 
 /* ── FILTER BUTTON (top right) ───────────── */
 .filter-float-btn {
   position: absolute;
@@ -188,7 +188,7 @@ header {
 }
 .filter-float-btn:hover { border-color: var(--purple); color: var(--purple); }
 .filter-float-btn.active { background: var(--purple); border-color: var(--purple); color: white; }
-
+ 
 /* ── FILTER PANEL ────────────────────────── */
 .filter-panel {
   position: absolute;
@@ -206,7 +206,7 @@ header {
   overflow-y: auto;
 }
 .filter-panel.open { display: flex; }
-
+ 
 .fp-header {
   padding: 14px 16px;
   border-bottom: 1px solid var(--border);
@@ -217,7 +217,7 @@ header {
   justify-content: space-between;
   align-items: center;
 }
-
+ 
 .fp-close {
   background: none;
   border: none;
@@ -228,7 +228,7 @@ header {
   padding: 0;
 }
 .fp-close:hover { color: var(--text); }
-
+ 
 .fp-location {
   padding: 10px 16px;
   border-bottom: 1px solid var(--border);
@@ -236,20 +236,20 @@ header {
   color: var(--text2);
 }
 .fp-location strong { color: var(--text); }
-
+ 
 .fp-section {
   padding: 14px 16px;
   border-bottom: 1px solid var(--border);
 }
 .fp-section:last-child { border-bottom: none; }
-
+ 
 .fp-section-title {
   font-weight: 600;
   font-size: 0.82rem;
   color: var(--text);
   margin-bottom: 10px;
 }
-
+ 
 .fp-check {
   display: flex;
   align-items: center;
@@ -268,7 +268,7 @@ header {
   cursor: pointer;
   accent-color: var(--purple);
 }
-
+ 
 .fp-uf {
   width: 100%;
   padding: 8px 10px;
@@ -281,7 +281,7 @@ header {
   outline: none;
   cursor: pointer;
 }
-
+ 
 /* ── CARD POPUP ──────────────────────────── */
 .card-popup {
   position: absolute;
@@ -300,7 +300,7 @@ header {
   overflow-y: auto;
 }
 .card-popup.open { display: flex; }
-
+ 
 .cp-close {
   position: absolute;
   top: 10px; right: 10px;
@@ -315,14 +315,14 @@ header {
   transition: all .15s;
 }
 .cp-close:hover { background: var(--border); color: var(--text); }
-
+ 
 .cp-tags {
   display: flex;
   gap: 6px;
   padding: 14px 14px 0;
   flex-wrap: wrap;
 }
-
+ 
 .cp-tag {
   font-size: 0.7rem;
   font-weight: 600;
@@ -333,7 +333,7 @@ header {
 .cp-tag.encerrado{ background: #F3F4F6; color: var(--gray); }
 .cp-tag.previsto { background: #EFF3FF; color: var(--blue); }
 .cp-tag.area     { background: #F3F4F6; color: var(--text2); border: 1px solid var(--border); }
-
+ 
 .cp-title {
   padding: 8px 14px 4px;
   font-size: 1.05rem;
@@ -341,13 +341,13 @@ header {
   color: var(--text);
   line-height: 1.3;
 }
-
+ 
 .cp-org {
   padding: 0 14px 12px;
   font-size: 0.78rem;
   color: var(--text2);
 }
-
+ 
 .cp-info-card {
   margin: 0 14px 10px;
   background: var(--bg);
@@ -357,13 +357,13 @@ header {
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
-
+ 
 .cp-info-item {
   display: flex;
   align-items: flex-start;
   gap: 8px;
 }
-
+ 
 .cp-info-icon {
   width: 28px; height: 28px;
   background: var(--white);
@@ -373,19 +373,19 @@ header {
   flex-shrink: 0;
   border: 1px solid var(--border);
 }
-
+ 
 .cp-info-label {
   font-size: 0.68rem;
   color: var(--text3);
   margin-bottom: 2px;
 }
-
+ 
 .cp-info-value {
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--text);
 }
-
+ 
 .cp-article {
   margin: 0 14px 14px;
   background: var(--bg);
@@ -395,7 +395,7 @@ header {
   align-items: flex-start;
   gap: 10px;
 }
-
+ 
 .cp-article-icon {
   width: 40px; height: 40px;
   background: var(--purple);
@@ -404,13 +404,13 @@ header {
   font-size: 18px;
   flex-shrink: 0;
 }
-
+ 
 .cp-article-label {
   font-size: 0.68rem;
   color: var(--text3);
   margin-bottom: 3px;
 }
-
+ 
 .cp-article-title {
   font-size: 0.8rem;
   font-weight: 600;
@@ -418,7 +418,7 @@ header {
   line-height: 1.35;
   margin-bottom: 10px;
 }
-
+ 
 .cp-btn {
   display: flex;
   align-items: center;
@@ -438,7 +438,7 @@ header {
   transition: opacity .15s;
 }
 .cp-btn:hover { opacity: .88; }
-
+ 
 /* ── LEGEND ──────────────────────────────── */
 .legend {
   position: absolute;
@@ -455,7 +455,7 @@ header {
 .li { display: flex; align-items: center; gap: 7px; font-size: 0.72rem; color: var(--text2); margin-bottom: 4px; }
 .li:last-child { margin-bottom: 0; }
 .ld { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-
+ 
 /* ── LEAFLET OVERRIDES ───────────────────── */
 .leaflet-div-icon-clean, .cluster-icon { background: transparent !important; border: none !important; }
 .leaflet-control-zoom a { background: var(--white) !important; border-color: var(--border) !important; color: var(--text2) !important; }
@@ -464,7 +464,7 @@ header {
 </style>
 </head>
 <body>
-
+ 
 <!-- HEADER -->
 <header>
   <a class="logo" href="#">
@@ -491,10 +491,10 @@ header {
     </div>
   </div>
 </header>
-
+ 
 <!-- MAP -->
 <div id="map"></div>
-
+ 
 <!-- FLOATING SEARCH -->
 <div class="float-search">
   <div class="search-box">
@@ -502,12 +502,12 @@ header {
     <button class="search-btn">🔍</button>
   </div>
 </div>
-
+ 
 <!-- FILTER BUTTON -->
 <button class="filter-float-btn" id="filter-btn" onclick="toggleFilters()">
   ⚙ Filtros
 </button>
-
+ 
 <!-- FILTER PANEL -->
 <div class="filter-panel" id="filter-panel">
   <div class="fp-header">
@@ -515,7 +515,7 @@ header {
     <button class="fp-close" onclick="toggleFilters()">✕</button>
   </div>
   <div class="fp-location">Local: <strong>Brasil</strong></div>
-
+ 
   <div class="fp-section">
     <div class="fp-section-title">Situação</div>
     <label class="fp-check"><input type="checkbox" value="aberto" onchange="updateFilters()"> Inscrições abertas</label>
@@ -523,7 +523,7 @@ header {
     <label class="fp-check"><input type="checkbox" value="encerrado" onchange="updateFilters()"> Inscrições encerradas</label>
     <label class="fp-check"><input type="checkbox" value="outros" onchange="updateFilters()"> Sem previsão</label>
   </div>
-
+ 
   <div class="fp-section">
     <div class="fp-section-title">Área</div>
     <label class="fp-check"><input type="checkbox" value="Policial" onchange="updateFilters()"> Policial</label>
@@ -539,7 +539,7 @@ header {
     <label class="fp-check"><input type="checkbox" value="Militar" onchange="updateFilters()"> Militar</label>
     <label class="fp-check"><input type="checkbox" value="Tribunais" onchange="updateFilters()"> Tribunais</label>
   </div>
-
+ 
   <div class="fp-section">
     <div class="fp-section-title">Estado</div>
     <select class="fp-uf" id="fp-uf" onchange="updateFilters()">
@@ -562,7 +562,7 @@ header {
     </select>
   </div>
 </div>
-
+ 
 <!-- CARD POPUP -->
 <div class="card-popup" id="card-popup">
   <button class="cp-close" onclick="closeCard()">✕</button>
@@ -572,7 +572,7 @@ header {
   <div class="cp-info-card" id="cp-info"></div>
   <div class="cp-article" id="cp-article" style="display:none"></div>
 </div>
-
+ 
 <!-- LEGEND -->
 <div class="legend">
   <div class="legend-title">Situação</div>
@@ -582,20 +582,21 @@ header {
   <div class="li"><div class="ld" style="background:#9b2226"></div> Encerradas</div>
   <div class="li"><div class="ld" style="background:var(--gray)"></div> Outras</div>
 </div>
-
+ 
 <script>
 // ── CONFIG ─────────────────────────────────
-const API_URL = 'https://script.google.com/macros/s/AKfycbw0_EktpndvkDTfEt0zE_Z40gC3XBKpE-8f_GOnFYX1wd2XsouHtivWXEyn6omlkgGYzg/exec';
-
+const SUPA_URL = 'https://bshsxflrixcjwdlielab.supabase.co';
+const SUPA_KEY = 'sb_publishable_NO2K81Lf_qrg1dywfUQVTA_W2PZ4ubY';
+ 
 // ── STATE ───────────────────────────────────
 let all = [], cluster, map;
 let filters = { situacoes: [], areas: [], uf: 'all', search: '' };
-
+ 
 // ── HELPERS ─────────────────────────────────
 const days = d => d ? Math.ceil((new Date(d) - new Date()) / 86400000) : null;
 const fmt  = n => (+n||0).toLocaleString('pt-BR');
 const fd   = d => { if(!d) return '—'; const p = d.slice(0,10).split('-'); return p.length===3 ? `${p[2]}/${p[1]}/${p[0]}` : '—'; };
-
+ 
 function sitClass(s) {
   const v = (s||'').toLowerCase().trim();
   const ab = ['inscrições abertas','edital publicado','autorizado','regulamento publicado','prorrogado'];
@@ -606,7 +607,7 @@ function sitClass(s) {
   if (en.some(x => v === x)) return 'encerrado';
   return 'outros';
 }
-
+ 
 function sitColor(sit) {
   const s = sitClass(sit);
   if (s==='aberto')    return '#3BAE8A';
@@ -614,7 +615,7 @@ function sitColor(sit) {
   if (s==='encerrado') return '#9b2226';
   return '#1e40af';
 }
-
+ 
 function normArea(a) {
   if (!a) return '';
   const s = a.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
@@ -632,63 +633,46 @@ function normArea(a) {
   if (/bancar|banco/.test(s)) return 'Bancária';
   return a;
 }
-
-// ── FETCH ────────────────────────────────────
+ 
+// ── FETCH DO SUPABASE ────────────────────────
 async function load() {
   try {
-    // JSONP — resolve CORS sem proxy
-    d = await new Promise((resolve, reject) => {
-      const cb = 'cb_' + Date.now();
-      const script = document.createElement('script');
-      const timeout = setTimeout(() => {
-        delete window[cb];
-        document.body.removeChild(script);
-        reject(new Error('Timeout ao carregar dados'));
-      }, 15000);
-      window[cb] = (data) => {
-        clearTimeout(timeout);
-        delete window[cb];
-        document.body.removeChild(script);
-        resolve(data);
-      };
-      script.src = API_URL + '?action=mapa&callback=' + cb;
-      script.onerror = () => {
-        clearTimeout(timeout);
-        delete window[cb];
-        reject(new Error('Erro ao carregar script'));
-      };
-      document.body.appendChild(script);
-    });
-    if (d.erro) throw new Error(d.erro);
-    all = (d.registros||[]).map((r,i) => ({
-      id:           r.id || i+1,
-      // Suporta tanto o formato da aba Consolidado quanto das abas mensais
-      orgao:        r.orgao || r['Nome'] || r['Concurso'] || '',
-      esfera:       r.esfera || (r.estado==='NAC'||r['UF']==='NAC' ? 'Federal' : 'Estadual'),
-      estado:       r.estado || r['UF'] || '',
+    // Busca concursos com situação ativa e coordenadas válidas
+    const res = await fetch(
+      SUPA_URL + '/rest/v1/concursos?select=id,orgao,esfera,estado,cidade,lat,lng,salario,salario_maximo,qtd_vagas,vagas,data_inscricao_termino,inscricao_fim,cargo,banca,area,situacao_concurso,situacao,url,link_do_edital,tamanho_concurso&order=id.desc&limit=1000',
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY } }
+    );
+    if (!res.ok) throw new Error('Erro ' + res.status);
+    const data = await res.json();
+ 
+    all = data.map((r, i) => ({
+      id:           r.id || i + 1,
+      orgao:        r.orgao || '',
+      esfera:       r.esfera || (r.estado === 'NAC' ? 'Federal' : 'Estadual'),
+      estado:       r.estado || '',
       cidade:       r.cidade || '',
-      lat:          parseFloat(r.lat || r['lat']) || 0,
-      lng:          parseFloat(r.lng || r['lng']) || 0,
-      salario:      r.salario || r['R$ Final (Teto)'] || r['$ final'] || r['R$ inicial'] || '',
-      vagas:        parseInt(r.vagas || r['Vagas']) || 0,
-      inscricao_fim:r.inscricao_fim || r['Inscrições até'] || r['Data da prova'] || r['Data da objetiva'] || '',
-      cargo:        r.cargo || r['Cargos'] || '',
-      banca:        r.banca || r['Banca - Edital vigente'] || r['Banca'] || '',
-      area:         r.area || r['Carreira Macro'] || r['Carreiras'] || '',
-      situacao:     r.situacao || r['Situação'] || '',
-      url:          r.url || r['URL Eterna'] || r['Link do edital'] || '',
-      url_blog:     r.url_blog || '',
-      url_curso:    r.url_curso || '',
+      lat:          parseFloat(r.lat) || 0,
+      lng:          parseFloat(r.lng) || 0,
+      salario:      r.salario_maximo ? 'R$ ' + Number(r.salario_maximo).toLocaleString('pt-BR') : (r.salario || ''),
+      vagas:        parseInt(r.qtd_vagas || r.vagas) || 0,
+      inscricao_fim:r.data_inscricao_termino || r.inscricao_fim || '',
+      cargo:        r.cargo || '',
+      banca:        r.banca || '',
+      area:         r.area || '',
+      situacao:     r.situacao_concurso || r.situacao || '',
+      url:          r.link_do_edital || r.url || '',
+      tamanho:      r.tamanho_concurso || '',
     })).filter(r => r.orgao && (r.lat || r.estado));
+ 
     document.getElementById('h-total').textContent   = fmt(all.length);
-    document.getElementById('h-abertos').textContent = all.filter(c => sitClass(c.situacao)==='aberto').length;
+    document.getElementById('h-abertos').textContent = all.filter(c => sitClass(c.situacao) === 'aberto').length;
     renderMap();
   } catch(e) {
     console.error(e);
     document.getElementById('h-total').textContent = 'Erro ao carregar';
   }
 }
-
+ 
 // ── FILTER ───────────────────────────────────
 function filtered() {
   return all.filter(c => {
@@ -710,7 +694,7 @@ function filtered() {
     return c.lat && c.lng;
   });
 }
-
+ 
 // ── MAP ──────────────────────────────────────
 function initMap() {
   const bounds = L.latLngBounds(L.latLng(-35,-74), L.latLng(6,-28));
@@ -724,7 +708,7 @@ function initMap() {
     maxZoom: 14, attribution: '© OpenStreetMap © CARTO'
   }).addTo(map);
   map.fitBounds(bounds, {padding:[20,20]});
-
+ 
   // Brasil border
   fetch('https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil-states.geojson')
     .then(r=>r.json())
@@ -735,12 +719,12 @@ function initMap() {
       }).addTo(map);
     }).catch(()=>{});
 }
-
+ 
 function renderMap() {
   if (cluster) { map.removeLayer(cluster); cluster = null; }
-
+ 
   const data = filtered();
-
+ 
   cluster = L.markerClusterGroup({
     maxClusterRadius: 50,
     spiderfyOnMaxZoom: true,
@@ -775,7 +759,7 @@ function renderMap() {
       });
     }
   });
-
+ 
   data.forEach(c => {
     const color = sitColor(c.situacao);
     const sz = 14;
@@ -795,26 +779,26 @@ function renderMap() {
     m.on('click', () => openCard(c));
     cluster.addLayer(m);
   });
-
+ 
   map.addLayer(cluster);
 }
-
+ 
 // ── CARD ─────────────────────────────────────
 function openCard(c) {
   closeFilters();
   const sc = sitClass(c.situacao);
   const scLabel = sc==='aberto'?'Inscrições abertas':sc==='encerrado'?'Inscrições encerradas':sc==='previsto'?'Edital em breve':'Sem previsão';
   const area = normArea(c.area);
-
+ 
   // tags
   document.getElementById('cp-tags').innerHTML =
     `<span class="cp-tag ${sc}">${scLabel}</span>` +
     (area ? `<span class="cp-tag area">${area}</span>` : '');
-
+ 
   // title + org
   document.getElementById('cp-title').textContent = c.orgao || '—';
   document.getElementById('cp-org').textContent   = c.banca || '';
-
+ 
   // info grid
   const local = c.cidade ? `${c.cidade} - ${c.estado}` : c.estado || '—';
   document.getElementById('cp-info').innerHTML = `
@@ -835,7 +819,7 @@ function openCard(c) {
       <div><div class="cp-info-label">Local</div><div class="cp-info-value">${local}</div></div>
     </div>
   `;
-
+ 
   // article card
   const art = document.getElementById('cp-article');
   if (c.url_blog || c.url) {
@@ -852,14 +836,14 @@ function openCard(c) {
   } else {
     art.style.display = 'none';
   }
-
+ 
   document.getElementById('card-popup').classList.add('open');
 }
-
+ 
 function closeCard() {
   document.getElementById('card-popup').classList.remove('open');
 }
-
+ 
 // ── FILTERS ──────────────────────────────────
 function toggleFilters() {
   const panel = document.getElementById('filter-panel');
@@ -868,29 +852,29 @@ function toggleFilters() {
   btn.classList.toggle('active', open);
   if (open) closeCard();
 }
-
+ 
 function closeFilters() {
   document.getElementById('filter-panel').classList.remove('open');
   document.getElementById('filter-btn').classList.remove('active');
 }
-
+ 
 function updateFilters() {
   // situações
   filters.situacoes = Array.from(document.querySelectorAll('.fp-check input:checked'))
     .map(el => el.value)
     .filter(v => ['aberto','previsto','encerrado','outros'].includes(v));
-
+ 
   // áreas
   filters.areas = Array.from(document.querySelectorAll('.fp-check input:checked'))
     .map(el => el.value)
     .filter(v => !['aberto','previsto','encerrado','outros'].includes(v));
-
+ 
   // uf
   filters.uf = document.getElementById('fp-uf').value;
-
+ 
   renderMap();
 }
-
+ 
 // ── SEARCH ───────────────────────────────────
 let st;
 document.getElementById('search').addEventListener('input', e => {
@@ -900,7 +884,7 @@ document.getElementById('search').addEventListener('input', e => {
     renderMap();
   }, 250);
 });
-
+ 
 // ── BOOT ─────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
   initMap();
