@@ -526,7 +526,8 @@ header {
   <div class="fp-section">
     <div class="fp-section-title">Situação</div>
     <label class="fp-check"><input type="checkbox" value="aberto" onchange="updateFilters()" checked> Inscrições abertas</label>
-    <label class="fp-check"><input type="checkbox" value="previsto" onchange="updateFilters()" checked> Previstas / Em andamento</label>
+    <label class="fp-check"><input type="checkbox" value="andamento" onchange="updateFilters()" checked> Em andamento</label>
+    <label class="fp-check"><input type="checkbox" value="previsto" onchange="updateFilters()" checked> Previstas</label>
   </div>
  
   <div class="fp-section">
@@ -594,12 +595,14 @@ header {
   <div class="legend">
   <div class="legend-title">Situação</div>
   <div class="li"><div class="ld" style="background:#3BAE8A"></div> Inscrições abertas</div>
+  <div class="li"><div class="ld" style="background:#C0392B"></div> Em andamento</div>
   <div class="li"><div class="ld" style="background:#4B7BE5"></div> Previstas</div>
 </div>
  
 <script>
 // ── CONFIG ─────────────────────────────────
-const API_URL = 'https://script.google.com/macros/s/AKfycbxh4Us8DosVf3xjDAkhB9YQLSOugQwAWmzDn0uLX06pPJVXNLAH9A2jffdNzsEItNJ3KA/exec';
+const SUPABASE_URL = 'https://bshsxflrixcjwdlielab.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzaHN4ZmxyaXhjandkbGllbGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMTI0NDMsImV4cCI6MjA5Mjg4ODQ0M30.LA_jGFgdfNs-tUPYxv_xYV5e1OQKc5NLaQqWCvG_ZNk';
  
 // ── STATE ───────────────────────────────────
 let all = [], cluster, map;
@@ -623,8 +626,9 @@ function sitClass(s) {
  
 function sitColor(sit) {
   const s = sitClass(sit);
-  if (s==='aberto')   return '#3BAE8A';
-  if (s==='previsto') return '#4B7BE5';
+  if (s==='aberto')    return '#3BAE8A'; // verde — inscrições abertas
+  if (s==='andamento') return '#C0392B'; // vermelho Gran — em andamento
+  if (s==='previsto')  return '#4B7BE5'; // azul — previstas
   return null;
 }
  
@@ -649,47 +653,45 @@ function normArea(a) {
 // ── FETCH ────────────────────────────────────
 async function load() {
   try {
-    // JSONP — resolve CORS sem proxy
-    d = await new Promise((resolve, reject) => {
-      const cb = 'cb_' + Date.now();
-      const script = document.createElement('script');
-      const timeout = setTimeout(() => {
-        delete window[cb];
-        document.body.removeChild(script);
-        reject(new Error('Timeout ao carregar dados'));
-      }, 15000);
-      window[cb] = (data) => {
-        clearTimeout(timeout);
-        delete window[cb];
-        document.body.removeChild(script);
-        resolve(data);
-      };
-      script.src = API_URL + '?action=mapa&callback=' + cb;
-      script.onerror = () => {
-        clearTimeout(timeout);
-        delete window[cb];
-        reject(new Error('Erro ao carregar script'));
-      };
-      document.body.appendChild(script);
-    });
-    if (d.erro) throw new Error(d.erro);
+    // Buscar do Supabase em páginas de 1000
+    let allData = [];
+    let offset = 0;
+    const pageSize = 1000;
+    let hasMore = true;
+ 
+    while (hasMore) {
+      const url = `${SUPABASE_URL}/rest/v1/concursos?select=*&order=id&offset=${offset}&limit=${pageSize}`;
+      const res = await fetch(url, {
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`
+        }
+      });
+      if (!res.ok) throw new Error(`Supabase error: ${res.status}`);
+      const page = await res.json();
+      allData = allData.concat(page);
+      hasMore = page.length === pageSize;
+      offset += pageSize;
+    }
+ 
+    const d = { registros: allData, total: allData.length };
+    // Supabase retorna campos diretos
     all = (d.registros||[]).map((r,i) => ({
       id:           r.id || i+1,
-      // Suporta tanto o formato da aba Consolidado quanto das abas mensais
-      orgao:        r.orgao || r['Nome'] || r['Concurso'] || '',
-      esfera:       r.esfera || (r.estado==='NAC'||r['UF']==='NAC' ? 'Federal' : 'Estadual'),
-      estado:       r.estado || r['UF'] || '',
+      orgao:        r.orgao || '',
+      esfera:       r.esfera || (r.estado === 'NAC' ? 'Federal' : 'Estadual'),
+      estado:       r.estado || '',
       cidade:       r.cidade || '',
-      lat:          parseFloat(r.lat || r['lat']) || 0,
-      lng:          parseFloat(r.lng || r['lng']) || 0,
-      salario:      r.salario || r['R$ Final (Teto)'] || r['$ final'] || r['R$ inicial'] || '',
-      vagas:        parseInt(r.vagas || r['Vagas']) || 0,
-      inscricao_fim:r.inscricao_fim || r['Inscrições até'] || r['Data da prova'] || r['Data da objetiva'] || '',
-      cargo:        r.cargo || r['Cargos'] || '',
-      banca:        r.banca || r['Banca - Edital vigente'] || r['Banca'] || '',
-      area:         r.area || r['Carreira Macro'] || r['Carreiras'] || '',
-      situacao:     r.situacao || r['Situação'] || '',
-      url:          r.url || r['URL Eterna'] || r['Link do edital'] || '',
+      lat:          parseFloat(r.lat) || 0,
+      lng:          parseFloat(r.lng) || 0,
+      salario:      r.salario || '',
+      vagas:        parseInt(r.vagas) || 0,
+      inscricao_fim:r.inscricao_fim || '',
+      cargo:        r.cargo || '',
+      banca:        r.banca || '',
+      area:         r.area || '',
+      situacao:     r.situacao || '',
+      url:          r.url || '',
       url_blog:     r.url_blog || '',
       url_curso:    r.url_curso || '',
     })).filter(r => r.orgao && (r.lat || r.estado));
@@ -949,7 +951,7 @@ function closeFilters() {
  
 function updateFilters() {
   const checked = Array.from(document.querySelectorAll('.fp-check input:checked')).map(el => el.value);
-  const sitVals = ['aberto','previsto'];
+  const sitVals = ['aberto','andamento','previsto'];
   const areaVals = ['Policial','Controle','Educação','Fiscal','Jurídica','Bancária','Legislativa','Administrativa','Saúde','TI','Militar','Tribunais'];
  
   filters.situacoes = checked.filter(v => sitVals.includes(v));
