@@ -117,7 +117,7 @@ header {
   position: absolute;
   top: 52px; left: 0; right: 0; bottom: 0;
   z-index: 1;
-  background: #d6e4f0;
+  background: #1a3a5c;
 }
  
 /* ── FLOATING SEARCH + FILTERS ───────────── */
@@ -736,40 +736,77 @@ function initMap() {
     maxBounds: bounds, maxBoundsViscosity: 0.8,
     zoomControl: true,
   });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    maxZoom: 14, attribution: '© OpenStreetMap © CARTO'
-  }).addTo(map);
+  // Tile com labels dos estados e cidades
   map.fitBounds(bounds, {padding:[20,20]});
  
-  // Carregar GeoJSON do Brasil
-  fetch('https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil-states.geojson')
-    .then(r=>r.json())
+  // Máscara: mundo escuro com buraco no Brasil
+  fetch('https://raw.githubusercontent.com/giuliano-macedo/geodata-br-states/main/geojson/br_states.json')
+    .then(r => r.json())
     .then(data => {
-      // Máscara azul escuro SÓLIDA cobrindo o mundo inteiro
-      const exterior = {
+      // Coletar todos os rings dos estados
+      const brasilRings = [];
+      data.features.forEach(f => {
+        const geo = f.geometry;
+        if (geo.type === 'Polygon') {
+          brasilRings.push(geo.coordinates[0]);
+        } else if (geo.type === 'MultiPolygon') {
+          geo.coordinates.forEach(poly => brasilRings.push(poly[0]));
+        }
+      });
+ 
+      // Anel externo: mundo inteiro em GeoJSON [lng, lat]
+      const mundo = [[-180,-90],[-180,90],[180,90],[180,-90],[-180,-90]];
+ 
+      // Criar pane específico para máscara (abaixo dos marcadores)
+      if (!map.getPane('maskPane')) {
+        map.createPane('maskPane');
+        map.getPane('maskPane').style.zIndex = 350;
+        map.getPane('maskPane').style.pointerEvents = 'none';
+      }
+ 
+      // Um polígono com múltiplos buracos (um por estado/ilha)
+      L.geoJSON({
         type: 'Feature',
         geometry: {
           type: 'Polygon',
-          coordinates: [[[-180,-90],[-180,90],[180,90],[180,-90],[-180,-90]]]
+          coordinates: [mundo, ...brasilRings]
         }
-      };
-      L.geoJSON(exterior, {
-        style: { color:'none', weight:0, fillColor:'#0d2137', fillOpacity:1 },
-        interactive: false
-      }).addTo(map);
- 
-      // Brasil por cima — fundo branco/claro com divisas sutis
-      L.geoJSON(data, {
+      }, {
+        pane: 'maskPane',
         style: {
-          color: '#8faabf',
-          weight: 0.6,
-          fillColor: '#f0f4f8',
-          fillOpacity: 1,
-          opacity: 0.8
+          color: 'none',
+          weight: 0,
+          fillColor: '#0d2137',
+          fillOpacity: 0.82
         },
         interactive: false
       }).addTo(map);
-    }).catch(()=>{});
+    })
+    .catch(err => console.log('Máscara erro:', err));
+ 
+ 
+ 
+  // Tile base sem labels (limpo, sem nomes de países)
+  // Tile sem nenhum label (nem Brasil nem países vizinhos)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+    maxZoom: 14, attribution: '© OpenStreetMap © CARTO'
+  }).addTo(map);
+ 
+  // Labels APENAS dentro do Brasil
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png', {
+    maxZoom: 14,
+    bounds: [[-35, -74], [6, -28]],
+    zIndex: 650
+  }).addTo(map);
+ 
+ 
+ 
+ 
+ 
+  
+ 
+  
+ 
 }
  
 function renderMap() {
